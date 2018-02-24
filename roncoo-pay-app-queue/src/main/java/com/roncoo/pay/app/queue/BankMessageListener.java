@@ -49,7 +49,8 @@ public class BankMessageListener implements SessionAwareMessageListener<Message>
 //	private RpTransactionMessageService rpTransactionMessageService;
 
 
-	public synchronized void onMessage(Message message, Session session) {
+	@Override
+    public synchronized void onMessage(Message message, Session session) {
 
 		Map<String,String> param = null;
 		String strMessage = null;

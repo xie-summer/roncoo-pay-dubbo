@@ -51,6 +51,7 @@ public class ConsumerSessionAwareMessageListener  implements MessageListener {
     /**
      * 监听消费MQ队列中的消息.
      */
+    @Override
     public void onMessage(Message message) {
         try {
             ActiveMQTextMessage msg = (ActiveMQTextMessage) message;

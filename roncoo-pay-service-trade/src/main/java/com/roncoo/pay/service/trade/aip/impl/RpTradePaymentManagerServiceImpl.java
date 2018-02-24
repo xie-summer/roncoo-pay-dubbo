@@ -657,7 +657,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
       	//验证签名
         boolean verify_result = AlipayNotify.verify(resultMap);
         if(verify_result){
-            if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
+            if("TRADE_FINISHED".equals(trade_status) || "TRADE_SUCCESS".equals(trade_status)){
                 String resultUrl = getMerchantNotifyUrl(rpTradePaymentRecord, rpTradePaymentOrder, rpTradePaymentRecord.getReturnUrl(), TradeStatusEnum.SUCCESS);
                 orderPayResultVo.setReturnUrl(resultUrl);
                 orderPayResultVo.setStatus(TradeStatusEnum.SUCCESS.name());
@@ -1101,7 +1101,7 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         }else if (PayWayEnum.ALIPAY.name().equals(payWayCode)){
             String trade_status = resultMap.get("trade_status");
             //验证签名
-            if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
+            if("TRADE_FINISHED".equals(trade_status) || "TRADE_SUCCESS".equals(trade_status)){
                 resultUrl = getMerchantNotifyUrl(rpTradePaymentRecord, rpTradePaymentOrder, rpTradePaymentRecord.getReturnUrl(), TradeStatusEnum.SUCCESS);
             }else{
                 resultUrl = getMerchantNotifyUrl(rpTradePaymentRecord, rpTradePaymentOrder, rpTradePaymentRecord.getReturnUrl(), TradeStatusEnum.FAILED);

@@ -61,10 +61,11 @@ public class RpAccountingVoucherServiceImpl implements RpAccountingVoucherServic
 	 * @param payerFee 付款方手续费.
 	 * @param receiverFee 收款方手续费.
 	 */
-	public void createAccountingVoucher(int entryType, String voucherNo, String payerAccountNo, String receiverAccountNo,
-			double payerChangeAmount, double receiverChangeAmount, double income, double cost, double profit, double bankChangeAmount,
-			String requestNo, String bankChannelCode, String bankAccount, int fromSystem, String remark, String bankOrderNo,
-			int payerAccountType, double payAmount, int receiverAccountType, double payerFee, double receiverFee) {
+	@Override
+    public void createAccountingVoucher(int entryType, String voucherNo, String payerAccountNo, String receiverAccountNo,
+                                        double payerChangeAmount, double receiverChangeAmount, double income, double cost, double profit, double bankChangeAmount,
+                                        String requestNo, String bankChannelCode, String bankAccount, int fromSystem, String remark, String bankOrderNo,
+                                        int payerAccountType, double payAmount, int receiverAccountType, double payerFee, double receiverFee) {
 		
 		RpAccountingVoucher rpAccountingVoucher = rpAccountingVoucherDao.getDataByVoucherNoFromSystem(entryType, voucherNo, fromSystem);
 		if(rpAccountingVoucher != null){
@@ -96,7 +97,8 @@ public class RpAccountingVoucherServiceImpl implements RpAccountingVoucherServic
 	 * @param map
 	 * @return
 	 */
-	public RpAccountingVoucher getBy(Map<String, Object> map) {
+	@Override
+    public RpAccountingVoucher getBy(Map<String, Object> map) {
 		RpAccountingVoucher note = rpAccountingVoucherDao.getBy(map);
 
 		return note;
@@ -107,7 +109,8 @@ public class RpAccountingVoucherServiceImpl implements RpAccountingVoucherServic
 	 * @param searchMap
 	 * @return
 	 */
-	@SuppressWarnings("rawtypes")
+	@Override
+    @SuppressWarnings("rawtypes")
 	public Map getMapBy(Map<String, Object> searchMap) {
 		return rpAccountingVoucherDao.getMapBy(searchMap);
 	}
@@ -122,7 +125,8 @@ public class RpAccountingVoucherServiceImpl implements RpAccountingVoucherServic
 	 * 查出分录请求表
 	 * @param requestNo
 	 */
-	public RpAccountingVoucher getAccountingVoucherByRequestNo(String requestNo){
+	@Override
+    public RpAccountingVoucher getAccountingVoucherByRequestNo(String requestNo){
 		RpAccountingVoucher entity = rpAccountingVoucherDao.findByRequestNo(requestNo);
 
 		return entity;
@@ -132,7 +136,8 @@ public class RpAccountingVoucherServiceImpl implements RpAccountingVoucherServic
 	 * 修改分录请求
 	 * @param param
 	 */
-	public void updateAccountingVoucher(RpAccountingVoucher entity){
+	@Override
+    public void updateAccountingVoucher(RpAccountingVoucher entity){
 		rpAccountingVoucherDao.update(entity);
 	}
 	

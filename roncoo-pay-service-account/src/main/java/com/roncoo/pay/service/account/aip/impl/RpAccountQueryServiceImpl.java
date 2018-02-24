@@ -59,7 +59,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 *            账户编号
 	 * @return
 	 */
-	public RpAccount getAccountByAccountNo(String accountNo) {
+	@Override
+    public RpAccount getAccountByAccountNo(String accountNo) {
 		LOG.info("根据账户编号查询账户信息");
 		RpAccount account = this.rpAccountDao.getByAccountNo(accountNo);
 		// 不是同一天直接清0
@@ -79,7 +80,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 *            用户编号
 	 * @return
 	 */
-	public RpAccount getAccountByUserNo(String userNo) {
+	@Override
+    public RpAccount getAccountByUserNo(String userNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userNo", userNo);
 		LOG.info("根据用户编号查询账户信息");
@@ -100,7 +102,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	/**
 	 * 分页查询账户历史单用户
 	 */
-	public PageBean queryAccountHistoryListPage(PageParam pageParam, String accountNo){
+	@Override
+    public PageBean queryAccountHistoryListPage(PageParam pageParam, String accountNo){
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("accountNo", accountNo);
 		return rpAccountDao.listPage(pageParam, params);
@@ -109,7 +112,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	/**
 	 * 分页查询账户历史单角色
 	 */
-	public PageBean queryAccountHistoryListPageByRole(PageParam pageParam, Map<String, Object> params){
+	@Override
+    public PageBean queryAccountHistoryListPageByRole(PageParam pageParam, Map<String, Object> params){
 		String accountType = (String) params.get("accountType");
 		if (StringUtils.isBlank(accountType)) {
 			throw AccountBizException.ACCOUNT_TYPE_IS_NULL;
@@ -129,7 +133,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 *            业务类型
 	 * @return AccountHistory
 	 */
-	public RpAccountHistory getAccountHistoryByAccountNo_requestNo_trxType(String accountNo, String requestNo, Integer trxType) {
+	@Override
+    public RpAccountHistory getAccountHistoryByAccountNo_requestNo_trxType(String accountNo, String requestNo, Integer trxType) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("accountNo", accountNo);
 		map.put("requestNo", requestNo);
@@ -150,7 +155,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 *            资金流向
 	 * @return
 	 */
-	public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo(String accountNo, String statDate, Integer riskDay, Integer fundDirection) {
+	@Override
+    public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo(String accountNo, String statDate, Integer riskDay, Integer fundDirection) {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("accountNo", accountNo);
@@ -171,7 +177,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 * @return AccountList.
 	 * @throws BizException
 	 */
-	public PageBean queryAccountListPage(PageParam pageParam, Map<String, Object> params) {
+	@Override
+    public PageBean queryAccountListPage(PageParam pageParam, Map<String, Object> params) {
 
 		return rpAccountDao.listPage(pageParam, params);
 	}
@@ -186,7 +193,8 @@ public class RpAccountQueryServiceImpl implements RpAccountQueryService {
 	 * @return AccountHistoryList.
 	 * @throws BizException
 	 */
-	public PageBean queryAccountHistoryListPage(PageParam pageParam, Map<String, Object> params) {
+	@Override
+    public PageBean queryAccountHistoryListPage(PageParam pageParam, Map<String, Object> params) {
 
 		return rpAccountHistoryDao.listPage(pageParam, params);
 	}

@@ -105,6 +105,7 @@ public class RpNotifyServiceImpl implements RpNotifyService {
         final String str = toJSON.toString();
 
         notifyJmsTemplate.send(new MessageCreator() {
+            @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage(str);
             }

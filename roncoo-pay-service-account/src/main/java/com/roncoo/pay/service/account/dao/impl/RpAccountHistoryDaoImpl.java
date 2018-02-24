@@ -33,11 +33,13 @@ import com.roncoo.pay.service.account.vo.DailyCollectAccountHistoryVo;
 @Repository
 public class RpAccountHistoryDaoImpl  extends BaseDaoImpl<RpAccountHistory> implements RpAccountHistoryDao{
 	
-	public List<RpAccountHistory> listPageByParams(Map<String, Object> params){
+	@Override
+    public List<RpAccountHistory> listPageByParams(Map<String, Object> params){
 		return this.listBy(params);
 	}
 	
-	public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo(Map<String, Object> params){
+	@Override
+    public List<DailyCollectAccountHistoryVo> listDailyCollectAccountHistoryVo(Map<String, Object> params){
 		return this.getSessionTemplate().selectList(getStatement("listDailyCollectAccountHistoryVo"), params);
 	}
 
@@ -50,7 +52,8 @@ public class RpAccountHistoryDaoImpl  extends BaseDaoImpl<RpAccountHistory> impl
 	}
 
 	/** 更新账户风险预存期外的账户历史记录记为结算完成 **/
-	public void updateCompleteSettTo100(Map<String, Object> params){
+	@Override
+    public void updateCompleteSettTo100(Map<String, Object> params){
 		this.getSessionTemplate().update(getStatement("updateCompleteSettTo100"), params);
 	}
 }

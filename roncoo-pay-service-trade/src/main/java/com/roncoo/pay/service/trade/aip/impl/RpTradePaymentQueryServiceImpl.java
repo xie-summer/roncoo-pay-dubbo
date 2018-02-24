@@ -60,7 +60,8 @@ public class RpTradePaymentQueryServiceImpl implements RpTradePaymentQueryServic
 	 * @param paramMap
 	 * @return
 	 */
-	public List<RpTradePaymentRecord> listPaymentRecord(Map<String, Object> paramMap) {
+	@Override
+    public List<RpTradePaymentRecord> listPaymentRecord(Map<String, Object> paramMap) {
 		return rpTradePaymentRecordDao.listByColumn(paramMap);
 	}
 
@@ -101,7 +102,8 @@ public class RpTradePaymentQueryServiceImpl implements RpTradePaymentQueryServic
 	 * @param bankOrderNo
 	 * @return
 	 */
-	public RpTradePaymentRecord getRecordByBankOrderNo(String bankOrderNo) {
+	@Override
+    public RpTradePaymentRecord getRecordByBankOrderNo(String bankOrderNo) {
 		return rpTradePaymentRecordDao.getByBankOrderNo(bankOrderNo);
 	}
 	
@@ -111,7 +113,8 @@ public class RpTradePaymentQueryServiceImpl implements RpTradePaymentQueryServic
 	 * @param trxNo
 	 * @return
 	 */
-	public RpTradePaymentRecord getRecordByTrxNo(String trxNo){
+	@Override
+    public RpTradePaymentRecord getRecordByTrxNo(String trxNo){
 		return rpTradePaymentRecordDao.getByTrxNo(trxNo);
 	}
 

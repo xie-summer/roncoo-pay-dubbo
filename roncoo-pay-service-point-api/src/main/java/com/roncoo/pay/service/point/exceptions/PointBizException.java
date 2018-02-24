@@ -48,7 +48,8 @@ public class PointBizException extends BizException {
 	 * @param args
 	 * @return
 	 */
-	public PointBizException newInstance(String msgFormat, Object... args) {
+	@Override
+    public PointBizException newInstance(String msgFormat, Object... args) {
 		return new PointBizException(this.code, msgFormat, args);
 	}
 

@@ -52,7 +52,8 @@ public class RpPointAccountQueryServiceImpl implements RpPointAccountQueryServic
 	 *            用户编号
 	 * @return
 	 */
-	public RpPointAccount getAccountByUserNo(String userNo) {
+	@Override
+    public RpPointAccount getAccountByUserNo(String userNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userNo", userNo);
 		LOG.info("根据用户编号查询账户信息");
@@ -79,7 +80,8 @@ public class RpPointAccountQueryServiceImpl implements RpPointAccountQueryServic
 	 * @return AccountList.
 	 * @throws BizException
 	 */
-	public PageBean queryAccountListPage(PageParam pageParam, Map<String, Object> params) {
+	@Override
+    public PageBean queryAccountListPage(PageParam pageParam, Map<String, Object> params) {
 
 		return rpPointAccountDao.listPage(pageParam, params);
 	}

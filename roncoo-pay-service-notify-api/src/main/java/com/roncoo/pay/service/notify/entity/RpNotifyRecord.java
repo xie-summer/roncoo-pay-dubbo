@@ -114,10 +114,12 @@ public class RpNotifyRecord  extends BaseEntity implements Serializable{
         this.notifyTimes = notifyTimes;
     }
 
+    @Override
     public Date getCreateTime() {
         return createTime;
     }
 
+    @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }

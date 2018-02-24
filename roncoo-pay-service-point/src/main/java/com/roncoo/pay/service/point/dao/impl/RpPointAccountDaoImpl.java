@@ -31,7 +31,8 @@ import com.roncoo.pay.service.point.entity.RpPointAccount;
 @Repository
 public class RpPointAccountDaoImpl  extends BaseDaoImpl<RpPointAccount> implements RpPointAccountDao{
 
-	public RpPointAccount getByUserNo(String userNo){
+	@Override
+    public RpPointAccount getByUserNo(String userNo){
 
 		Map<String , Object> paramMap = new HashMap<String , Object>();
 		paramMap.put("userNo",userNo);

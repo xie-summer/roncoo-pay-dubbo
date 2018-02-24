@@ -74,6 +74,7 @@ public class App
         LOG.info("==>startThread");
 
         threadPool.execute(new Runnable() {
+            @Override
             public void run() {
                 try {
                     while (true) {
@@ -85,6 +86,7 @@ public class App
                             final NotifyTask task = tasks.take(); //使用take方法获取过期任务,如果获取不到,就一直等待,知道获取到数据
                             if (task != null) {
                                 threadPool.execute(new Runnable() {
+                                    @Override
                                     public void run() {
                                         tasks.remove(task);
                                         task.run(); // 执行通知处理

@@ -77,11 +77,13 @@ public class NotifyTask implements Runnable, Delayed {
      * 比较当前时间(task.executeTime)与任务允许执行的开始时间(executeTime).<br/>
      * 如果当前时间到了或超过任务允许执行的开始时间，那么就返回-1，可以执行。
      */
+    @Override
     public int compareTo(Delayed o) {
         NotifyTask task = (NotifyTask) o;
         return executeTime > task.executeTime ? 1 : (executeTime < task.executeTime ? -1 : 0);
     }
 
+    @Override
     public long getDelay(TimeUnit unit) {
         return unit.convert(executeTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
     }
@@ -89,6 +91,7 @@ public class NotifyTask implements Runnable, Delayed {
     /**
      * 执行通知处理.
      */
+    @Override
     public void run() {
         
         Integer notifyTimes = notifyRecord.getNotifyTimes(); // 得到当前通知对象的通知次数

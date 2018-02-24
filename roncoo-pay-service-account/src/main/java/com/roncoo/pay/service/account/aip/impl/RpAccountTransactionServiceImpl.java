@@ -85,7 +85,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount creditToAccount(String userNo, BigDecimal amount, String requestNo, String trxType, String remark){
 
 		return this.creditToAccount(userNo, amount, requestNo, null, trxType, remark);
@@ -105,7 +106,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount creditToAccount(String userNo, BigDecimal amount, String requestNo, String bankTrxNo, String trxType, String remark) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {
@@ -179,7 +181,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	@Compensable(confirmMethod = "confirmCreditToAccountTcc",cancelMethod = "cancelCreditToAccountTcc")
 	public void creditToAccountTcc(TransactionContext transactionContext, String userNo, BigDecimal amount, String requestNo, String bankTrxNo, String trxType, String remark) {
 
@@ -320,7 +323,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount debitToAccount(String userNo, BigDecimal amount, String requestNo, String trxType, String remark){
 		return this.debitToAccount(userNo, amount, requestNo, null, trxType, remark);
 	}
@@ -339,7 +343,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount debitToAccount(String userNo, BigDecimal amount, String requestNo, String bankTrxNo, String trxType, String remark) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {
@@ -400,7 +405,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 *            冻结金额
 	 **/
 
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount freezeAmount(String userNo, BigDecimal freezeAmount) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {
@@ -432,7 +438,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 *            备注
 	 */
 
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount unFreezeAmount(String userNo, BigDecimal amount, String requestNo, String trxType, String remark) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {
@@ -490,7 +497,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 *            解冻和减款金额
 	 */
 
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public RpAccount unFreezeSettAmount(String userNo, BigDecimal amount) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);
 		if (account == null) {
@@ -529,7 +537,8 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 *            可结算金额累计
 	 * 
 	 */
-	@Transactional(rollbackFor = Exception.class)
+	@Override
+    @Transactional(rollbackFor = Exception.class)
 	public void settCollectSuccess(String userNo, String collectDate, int riskDay, BigDecimal totalAmount) {
 
 		LOG.info("==>settCollectSuccess");

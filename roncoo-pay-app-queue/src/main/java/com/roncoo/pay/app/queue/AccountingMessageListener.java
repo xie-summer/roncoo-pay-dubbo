@@ -39,7 +39,8 @@ public class AccountingMessageListener implements SessionAwareMessageListener<Me
 	private RpTransactionMessageService rpTransactionMessageService;
 
 
-	public synchronized void onMessage(Message message, Session session) {
+	@Override
+    public synchronized void onMessage(Message message, Session session) {
 
 		RpAccountingVoucher param = null;
 		String strMessage = null;
@@ -60,7 +61,7 @@ public class AccountingMessageListener implements SessionAwareMessageListener<Me
 			String payerAccountNo = param.getPayerAccountNo();
 			int fromSystem = param.getFromSystem();
 			int payerAccountType = 0;
-			if (param.getPayerAccountType() != null && !param.getPayerAccountType().equals("")) {
+			if (param.getPayerAccountType() != null && !"".equals(param.getPayerAccountType())) {
 				payerAccountType = param.getPayerAccountType();
 			}
 			double payerFee = param.getPayerFee();
@@ -78,7 +79,7 @@ public class AccountingMessageListener implements SessionAwareMessageListener<Me
 			String bankOrderNo = param.getBankOrderNo();
 			int receiverAccountType = 0;
 			double payAmount = param.getPayAmount();
-			if (param.getReceiverAccountType() != null && !param.getReceiverAccountType().equals("")) {
+			if (param.getReceiverAccountType() != null && !"".equals(param.getReceiverAccountType())) {
 				receiverAccountType = param.getReceiverAccountType();
 			}
 

@@ -64,7 +64,7 @@ public class AlipayNotify {
         //String sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign + "\n 返回回来的参数：" + AlipayCore.createLinkString(params);
 	    //AlipayCore.logResult(sWord);
 
-        if (isSign && responseTxt.equals("true")) {
+        if (isSign && "true".equals(responseTxt)) {
             return true;
         } else {
             return false;
@@ -84,7 +84,7 @@ public class AlipayNotify {
         String preSignStr = AlipayCore.createLinkString(sParaNew);
         //获得签名验证结果
         boolean isSign = false;
-        if(AlipayConfigUtil.sign_type.equals("MD5") ) {
+        if("MD5".equals(AlipayConfigUtil.sign_type)) {
         	isSign = MD5.verify(preSignStr, sign, AlipayConfigUtil.key, AlipayConfigUtil.input_charset);
         }
         return isSign;

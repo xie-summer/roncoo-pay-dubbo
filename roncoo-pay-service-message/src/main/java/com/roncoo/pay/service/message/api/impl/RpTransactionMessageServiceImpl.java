@@ -52,6 +52,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	@Autowired
 	private JmsTemplate notifyJmsTemplate;
 
+	@Override
 	public int saveMessageWaitingConfirm(RpTransactionMessage message) {
 		
 		if (message == null) {
@@ -70,6 +71,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 	
+	@Override
 	public void confirmAndSendMessage(String messageId) {
 		final RpTransactionMessage message = getMessageByMessageId(messageId);
 		if (message == null) {
@@ -82,6 +84,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 		
 		notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 		notifyJmsTemplate.send(new MessageCreator() {
+			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message.getMessageBody());
 			}
@@ -89,6 +92,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 
+	@Override
 	public int saveAndSendMessage(final RpTransactionMessage message) {
 
 		if (message == null) {
@@ -107,6 +111,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 
 		notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 		notifyJmsTemplate.send(new MessageCreator() {
+			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message.getMessageBody());
 			}
@@ -116,6 +121,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 
 
+	@Override
 	public void directSendMessage(final RpTransactionMessage message) {
 
 		if (message == null) {
@@ -128,6 +134,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 
 		notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 		notifyJmsTemplate.send(new MessageCreator() {
+			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message.getMessageBody());
 			}
@@ -135,6 +142,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 	
+	@Override
 	public void reSendMessage(final RpTransactionMessage message) {
 
 		if (message == null) {
@@ -151,6 +159,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 
 		notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 		notifyJmsTemplate.send(new MessageCreator() {
+			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message.getMessageBody());
 			}
@@ -158,6 +167,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 
+	@Override
 	public void reSendMessageByMessageId(String messageId) {
 		final RpTransactionMessage message = getMessageByMessageId(messageId);
 		if (message == null) {
@@ -175,6 +185,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 		
 		notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 		notifyJmsTemplate.send(new MessageCreator() {
+			@Override
 			public Message createMessage(Session session) throws JMSException {
 				return session.createTextMessage(message.getMessageBody());
 			}
@@ -182,6 +193,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 	
+	@Override
 	public void setMessageToAreadlyDead(String messageId) {
 		RpTransactionMessage message = getMessageByMessageId(messageId);
 		if (message == null) {
@@ -194,6 +206,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 
 
+	@Override
 	public RpTransactionMessage getMessageByMessageId(String messageId) {
 
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -203,6 +216,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 
 
+	@Override
 	public void deleteMessageByMessageId(String messageId) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("messageId", messageId);
@@ -210,6 +224,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 	
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public void reSendAllDeadMessageByQueueName(String queueName, int batchSize) {
 		log.info("==>reSendAllDeadMessageByQueueName");
@@ -274,6 +289,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 			
 			notifyJmsTemplate.setDefaultDestinationName(message.getConsumerQueue());
 			notifyJmsTemplate.send(new MessageCreator() {
+				@Override
 				public Message createMessage(Session session) throws JMSException {
 					return session.createTextMessage(message.getMessageBody());
 				}
@@ -283,6 +299,7 @@ public class RpTransactionMessageServiceImpl implements RpTransactionMessageServ
 	}
 
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public PageBean<RpTransactionMessage> listPage(PageParam pageParam, Map<String, Object> paramMap){
 		return rpTransactionMessageDao.listPage(pageParam, paramMap);
