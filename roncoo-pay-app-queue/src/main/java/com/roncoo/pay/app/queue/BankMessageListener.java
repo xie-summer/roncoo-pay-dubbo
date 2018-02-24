@@ -59,7 +59,8 @@ public class BankMessageListener implements SessionAwareMessageListener<Message>
 			ActiveMQTextMessage objectMessage = (ActiveMQTextMessage) message;
 			strMessage = objectMessage.getText();
 			LOG.info("strMessage1 bank:" + strMessage);
-			param = JSONObject.parseObject(strMessage, Map.class); // 这里转换成相应的对象还有问题
+			// 这里转换成相应的对象还有问题
+			param = JSONObject.parseObject(strMessage, Map.class);
 
 			BankMessageTask bankMessageTask = new BankMessageTask(param);
 			bankMessageTask.setBankMessageBiz(bankMessageBiz);

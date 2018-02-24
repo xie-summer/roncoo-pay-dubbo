@@ -9,20 +9,24 @@
 package com.roncoo.pay.app.queue.bankmessage;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <b>功能说明:
  * </b>
  *
  * @author Peter
- *         <a href="http://www.roncoo.com">龙果学院(www.roncoo.com)</a>
+ * <a href="http://www.roncoo.com">龙果学院(www.roncoo.com)</a>
  */
 public class BankMessageFixedThreadPool {
 
-  private  static ExecutorService fixedThreadPool = Executors.newFixedThreadPool(5);
+    private static ExecutorService fixedThreadPool = new ThreadPoolExecutor(5, 5,
+            0L, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
 
-   public static void addTask(BankMessageTask bankMessageTask){
-       fixedThreadPool.execute(bankMessageTask);
-   }
+    public static void addTask(BankMessageTask bankMessageTask) {
+        fixedThreadPool.execute(bankMessageTask);
+    }
 }

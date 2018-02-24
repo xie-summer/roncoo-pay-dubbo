@@ -221,17 +221,22 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
             LOG.info("订单{}状态为非等待支付状态,不做业务处理",bankOrderNo);
             return;
         }
-
-        boolean orderIsSuccess = false;// 银行返回订单是否为支付成功状态
-        String bankTrxNo = "";//银行流水号
-        Date timeEnd = null;//订单完成时间
-        String bankReturnMsg = "";//银行返回信息
+        // 银行返回订单是否为支付成功状态
+        boolean orderIsSuccess = false;
+        //银行流水号
+        String bankTrxNo = "";
+        //订单完成时间
+        Date timeEnd = null;
+        //银行返回信息
+        String bankReturnMsg = "";
 
         if(PayWayEnum.WEIXIN.name().equals(payWayCode)){
-            if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code"))){//业务结果 成功
+            //业务结果 成功
+            if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code"))){
                 String timeEndStr = notifyMap.get("time_end");
                 if (!StringUtil.isEmpty(timeEndStr)){
-                    timeEnd =  DateUtils.getDateFromString(timeEndStr,"yyyyMMddHHmmss");//订单支付完成时间
+                    //订单支付完成时间
+                    timeEnd =  DateUtils.getDateFromString(timeEndStr,"yyyyMMddHHmmss");
                 }
                 orderIsSuccess = true;
                 bankTrxNo = notifyMap.get("transaction_id");
@@ -248,7 +253,8 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
                 //注意：
                 //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
             } else if (AliPayTradeStateEnum.TRADE_SUCCESS.name().equals(tradeStatus)){
-                String gmtPaymentStr = notifyMap.get("gmt_payment");//付款时间
+                //付款时间
+                String gmtPaymentStr = notifyMap.get("gmt_payment");
                 if(!StringUtil.isEmpty(gmtPaymentStr)){
                     timeEnd = DateUtils.getDateFromString(gmtPaymentStr,"yyyy-MM-dd HH:mm:ss");
                 }
@@ -259,10 +265,12 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
             
         }else if (PayWayEnum.TEST_PAY_HTTP_CLIENT.name().equals(payWayCode)){
         	// 模拟网关支付
-        	if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code"))){//业务结果 成功
+            // 业务结果 成功
+        	if (WeixinTradeStateEnum.SUCCESS.name().equals(notifyMap.get("result_code"))){
                 String timeEndStr = notifyMap.get("time_end");
                 if (!StringUtil.isEmpty(timeEndStr)){
-                    timeEnd =  DateUtils.getDateFromString(timeEndStr,"yyyyMMddHHmmss");//订单支付完成时间
+                    //订单支付完成时间
+                    timeEnd =  DateUtils.getDateFromString(timeEndStr,"yyyyMMddHHmmss");
                 }
                 orderIsSuccess = true;
                 bankTrxNo = notifyMap.get("transaction_id");
@@ -271,11 +279,12 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         }else{
             throw new TradeBizException(TradeBizException.TRADE_PAY_WAY_ERROR,"错误的支付方式");
         }
-
-        if (orderIsSuccess){//银行返回订单支付成功
+        //银行返回订单支付成功
+        if (orderIsSuccess){
         	
             LOG.info("==>开始处理支付成功的订单结果");
-            RpTransactionMessage rpTransactionMessage = sealRpTransactionMessage(rpTradePaymentRecord); // 封装会计原始凭证数据
+            // 封装会计原始凭证数据
+            RpTransactionMessage rpTransactionMessage = sealRpTransactionMessage(rpTradePaymentRecord);
             rpTransactionMessageService.saveMessageWaitingConfirm(rpTransactionMessage);
             LOG.info("==>保存消息数据");
 
@@ -344,34 +353,46 @@ public class RpTradePaymentManagerServiceImpl implements RpTradePaymentManagerSe
         }
 
         Map<String , Object> paramMap = new HashMap<>();
-
-        String payKey = rpUserPayConfig.getPayKey();// 企业支付KEY
+// 企业支付KEY
+        String payKey = rpUserPayConfig.getPayKey();
         paramMap.put("payKey",payKey);
-        String productName = rpTradePaymentRecord.getProductName(); // 商品名称
+        // 商品名称
+        String productName = rpTradePaymentRecord.getProductName();
         paramMap.put("productName",productName);
-        String orderNo = rpTradePaymentRecord.getMerchantOrderNo(); // 订单编号
+        // 订单编号
+        String orderNo = rpTradePaymentRecord.getMerchantOrderNo();
         paramMap.put("orderNo",orderNo);
-        BigDecimal orderPrice = rpTradePaymentRecord.getOrderAmount(); // 订单金额 , 单位:元
+        // 订单金额 , 单位:元
+        BigDecimal orderPrice = rpTradePaymentRecord.getOrderAmount();
         paramMap.put("orderPrice",orderPrice);
-        String payWayCode = rpTradePaymentRecord.getPayWayCode(); // 支付方式编码 支付宝: ALIPAY  微信:WEIXIN
+        // 支付方式编码 支付宝: ALIPAY  微信:WEIXIN
+        String payWayCode = rpTradePaymentRecord.getPayWayCode();
         paramMap.put("payWayCode",payWayCode);
-        paramMap.put("tradeStatus",tradeStatusEnum);//交易状态
-        String orderDateStr = DateUtils.formatDate(rpTradePaymentOrder.getOrderDate(),"yyyyMMdd"); // 订单日期
+        //交易状态
+        paramMap.put("tradeStatus",tradeStatusEnum);
+        // 订单日期
+        String orderDateStr = DateUtils.formatDate(rpTradePaymentOrder.getOrderDate(),"yyyyMMdd");
         paramMap.put("orderDate",orderDateStr);
-        String orderTimeStr = DateUtils.formatDate(rpTradePaymentOrder.getOrderTime(), "yyyyMMddHHmmss"); // 订单时间
+        // 订单时间
+        String orderTimeStr = DateUtils.formatDate(rpTradePaymentOrder.getOrderTime(), "yyyyMMddHHmmss");
         paramMap.put("orderTime",orderTimeStr);
-        String remark = rpTradePaymentRecord.getRemark(); // 支付备注
+        // 支付备注
+        String remark = rpTradePaymentRecord.getRemark();
         paramMap.put("remark",remark);
-
-        String field1 = rpTradePaymentOrder.getField1(); // 扩展字段1
+        // 扩展字段1
+        String field1 = rpTradePaymentOrder.getField1();
         paramMap.put("field1",field1);
-        String field2 = rpTradePaymentOrder.getField2(); // 扩展字段2
+        // 扩展字段2
+        String field2 = rpTradePaymentOrder.getField2();
         paramMap.put("field2",field2);
-        String field3 = rpTradePaymentOrder.getField3(); // 扩展字段3
+        // 扩展字段3
+        String field3 = rpTradePaymentOrder.getField3();
         paramMap.put("field3",field3);
-        String field4 = rpTradePaymentOrder.getField4(); // 扩展字段4
+        // 扩展字段4
+        String field4 = rpTradePaymentOrder.getField4();
         paramMap.put("field4",field4);
-        String field5 = rpTradePaymentOrder.getField5(); // 扩展字段5
+        // 扩展字段5
+        String field5 = rpTradePaymentOrder.getField5();
         paramMap.put("field5",field5);
 
         String paramStr = MerchantApiUtil.getParamStr(paramMap);
